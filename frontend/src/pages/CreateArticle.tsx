@@ -1,6 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import api from '../utils/api';
+
+const modules = {
+    toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        ['link', 'image'],
+        ['clean']
+    ],
+};
+
+const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image'
+];
 
 const CreateArticle = () => {
     const [title, setTitle] = useState('');
@@ -44,14 +63,17 @@ const CreateArticle = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Content</label>
-                    <textarea
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        rows={10}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-                        required
-                    />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+                    <div className="h-64 mb-12">
+                        <ReactQuill 
+                            theme="snow"
+                            value={content}
+                            onChange={setContent}
+                            modules={modules}
+                            formats={formats}
+                            className="h-full"
+                        />
+                    </div>
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Image</label>

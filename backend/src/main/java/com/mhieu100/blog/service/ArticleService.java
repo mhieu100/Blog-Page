@@ -86,4 +86,8 @@ public class ArticleService {
             throw new RuntimeException("You are not authorized to delete this article");
         }
     }
+
+    public List<Article> searchArticles(String query) {
+        return articleRepository.searchArticles(query);
+    }
 }

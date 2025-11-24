@@ -36,6 +36,11 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getArticleById(id));
     }
 
+    @GetMapping("/public/search")
+    public ResponseEntity<List<Article>> searchArticles(@RequestParam("query") String query) {
+        return ResponseEntity.ok(articleService.searchArticles(query));
+    }
+
     @PostMapping
     public ResponseEntity<Article> createArticle(
             @RequestParam("title") String title,

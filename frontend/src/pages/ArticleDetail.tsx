@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import type { Article } from '../types';
-import { Calendar, User, ArrowLeft } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Clock } from 'lucide-react';
+import DOMPurify from 'dompurify';
+import { calculateReadingTime } from '../utils/readingTime';
 
 const ArticleDetail = () => {
     const { id } = useParams<{ id: string }>();
@@ -39,6 +41,8 @@ const ArticleDetail = () => {
             </div>
         );
     }
+
+    const readingTime = calculateReadingTime(article.content);
 
     return (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -77,13 +81,18 @@ const ArticleDetail = () => {
                                 day: 'numeric'
                             })}</span>
                         </div>
+                        <div className="flex items-center">
+                            <Clock className="w-5 h-5 mr-2" />
+                            <span>{readingTime} min read</span>
+                        </div>
                     </div>
 
-                    <div className="prose prose-lg max-w-none">
-                        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                            {article.content}
-                        </p>
-                    </div>
+                    <div 
+                        className="prose prose-lg max-w-none"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(article.content)
+                        }}
+                    />
                 </div>
             </article>
         </div>
