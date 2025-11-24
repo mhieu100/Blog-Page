@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import api from '../utils/api';
 
 const Register = () => {
@@ -17,7 +17,7 @@ const Register = () => {
             const response = await api.post('/auth/register', { name, email, password });
             login(response.data.token, response.data.role);
             navigate('/');
-        } catch (err) {
+        } catch {
             setError('Registration failed');
         }
     };

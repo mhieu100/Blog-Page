@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import api from '../utils/api';
 import type { Article } from '../types';
 import { Check, X } from 'lucide-react';
@@ -6,18 +6,18 @@ import { Check, X } from 'lucide-react';
 const AdminDashboard = () => {
     const [pendingArticles, setPendingArticles] = useState<Article[]>([]);
 
-    const fetchPendingArticles = async () => {
+    const fetchPendingArticles = useCallback(async () => {
         try {
             const response = await api.get('/admin/pending-articles');
             setPendingArticles(response.data);
         } catch (error) {
             console.error('Error fetching pending articles:', error);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchPendingArticles();
-    }, []);
+    }, [fetchPendingArticles]);
 
     const handleApprove = async (id: number) => {
         try {

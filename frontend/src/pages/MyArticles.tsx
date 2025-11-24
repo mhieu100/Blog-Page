@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import api from '../utils/api';
 import type { Article } from '../types';
 import { Trash2 } from 'lucide-react';
@@ -6,18 +6,18 @@ import { Trash2 } from 'lucide-react';
 const MyArticles = () => {
     const [articles, setArticles] = useState<Article[]>([]);
 
-    const fetchArticles = async () => {
+    const fetchArticles = useCallback(async () => {
         try {
             const response = await api.get('/articles/my-articles');
             setArticles(response.data);
         } catch (error) {
             console.error('Error fetching my articles:', error);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchArticles();
-    }, []);
+    }, [fetchArticles]);
 
     const handleDelete = async (id: number) => {
         if (window.confirm('Are you sure you want to delete this article?')) {

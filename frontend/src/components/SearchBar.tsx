@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Search } from 'lucide-react';
 
 interface SearchBarProps {
@@ -8,13 +8,21 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const [query, setQuery] = useState('');
 
+    // Memoize the search handler to prevent unnecessary re-renders
+    const debouncedSearch = useCallback(
+        (searchQuery: string) => {
+            onSearch(searchQuery);
+        },
+        [onSearch]
+    );
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            onSearch(query);
-        }, 500); // Debounce 500ms
+            debouncedSearch(query);
+        }, 300); // Optimized debounce to 300ms for better UX
 
         return () => clearTimeout(timeoutId);
-    }, [query, onSearch]);
+    }, [query, debouncedSearch]);
 
     return (
         <div className="relative max-w-xl mx-auto mb-8">
