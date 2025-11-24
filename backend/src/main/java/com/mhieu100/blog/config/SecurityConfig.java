@@ -52,7 +52,9 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173", // Local frontend
                 "http://localhost:3000", // Alternative local port
-                "https://deloy-fullstack.vercel.app" // Production frontend
+                "https://deloy-fullstack.vercel.app", // Production frontend (Vercel)
+                "https://mhieu100.space", // Production frontend (main domain)
+                "https://www.mhieu100.space" // Production frontend (www subdomain)
         ));
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
