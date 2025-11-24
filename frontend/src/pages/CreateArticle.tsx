@@ -38,6 +38,8 @@ const CreateArticle = () => {
   const [image, setImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string>('')
   const [showPreview, setShowPreview] = useState(false)
+  const [tags, setTags] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState('')
   const navigate = useNavigate()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +61,9 @@ const CreateArticle = () => {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('content', content)
+    if (tags.length > 0) {
+      formData.append('tags', JSON.stringify(tags))
+    }
     if (image) {
       formData.append('image', image)
     }
@@ -149,6 +154,58 @@ const CreateArticle = () => {
                 accept="image/*"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Tags
+              </label>
+              <div className="mt-1 flex items-center gap-2">
+                <input
+                  type="text"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                      const t = tagInput.trim()
+                      if (t && !tags.includes(t)) {
+                        setTags((s) => [...s, t])
+                      }
+                      setTagInput('')
+                    }
+                  }}
+                  placeholder="Add tag and press Enter"
+                  className="flex-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const t = tagInput.trim()
+                    if (t && !tags.includes(t)) setTags((s) => [...s, t])
+                    setTagInput('')
+                  }}
+                  className="px-3 py-2 bg-blue-600 text-white rounded-md"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-200 text-gray-800 px-2 py-1 rounded-full inline-flex items-center gap-2"
+                  >
+                    <span>{tag}</span>
+                    <button
+                      type="button"
+                      onClick={() => setTags((s) => s.filter((x) => x !== tag))}
+                      className="ml-2 text-gray-500 hover:text-gray-700 dark:hover:text-white"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
             <button
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
@@ -183,6 +240,20 @@ const CreateArticle = () => {
                 <h1 className="text-3xl font-bold text-gray-400 dark:text-gray-500 mb-4 italic">
                   Your Title Here
                 </h1>
+              )}
+
+              {/* Tags preview */}
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {tags.map((t) => (
+                    <span
+                      key={t}
+                      className="text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-200 text-gray-800 px-2 py-1 rounded-full"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               )}
 
               <div className="flex items-center space-x-6 text-gray-600 dark:text-gray-400 mb-6 pb-6 border-b dark:border-gray-700">

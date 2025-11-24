@@ -45,8 +45,9 @@ public class ArticleController {
     public ResponseEntity<Article> createArticle(
             @RequestParam("title") String title,
             @RequestParam("content") String content,
-            @RequestParam(value = "image", required = false) MultipartFile image) {
-        return ResponseEntity.ok(articleService.createArticle(title, content, image));
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "tags", required = false) String tags) {
+        return ResponseEntity.ok(articleService.createArticle(title, content, image, tags));
     }
 
     @GetMapping("/my-articles")

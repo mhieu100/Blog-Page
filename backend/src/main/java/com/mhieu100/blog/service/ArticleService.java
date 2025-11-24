@@ -1,5 +1,7 @@
 package com.mhieu100.blog.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mhieu100.blog.entity.Article;
 import com.mhieu100.blog.entity.ArticleStatus;
 import com.mhieu100.blog.entity.User;
@@ -10,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +22,9 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final CloudinaryService cloudinaryService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Article createArticle(String title, String content, MultipartFile image) {
+    public Article createArticle(String title, String content, MultipartFile image, String tagsJson) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email).orElseThrow();
 
@@ -29,10 +33,21 @@ public class ArticleService {
             imageUrl = cloudinaryService.uploadFile(image);
         }
 
+        List<String> tags = new ArrayList<>();
+        if (tagsJson != null && !tagsJson.isEmpty()) {
+            try {
+                tags = objectMapper.readValue(tagsJson, new TypeReference<List<String>>() {});
+            } catch (Exception e) {
+                // Log error but continue without tags
+                System.err.println("Error parsing tags: " + e.getMessage());
+            }
+        }
+
         Article article = Article.builder()
                 .title(title)
                 .content(content)
                 .imageUrl(imageUrl)
+                .tags(tags)
                 .author(user)
                 .status(ArticleStatus.PENDING)
                 .build();

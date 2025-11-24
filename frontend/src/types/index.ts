@@ -14,6 +14,7 @@ export interface Article {
   title: string
   content: string
   imageUrl: string
+  tags?: string[]
   status: 'PENDING' | 'APPROVED' | 'REJECTED'
   createdAt: string
   author: {
