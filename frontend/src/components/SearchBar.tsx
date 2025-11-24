@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react'
 import type React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Spinner from './Spinner'
 
 interface SearchBarProps {
@@ -10,22 +10,20 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, loading = false }) => {
   const [query, setQuery] = useState('')
+  const onSearchRef = useRef(onSearch)
 
-  // Memoize the search handler to prevent unnecessary re-renders
-  const debouncedSearch = useCallback(
-    (searchQuery: string) => {
-      onSearch(searchQuery)
-    },
-    [onSearch]
-  )
+  // Keep ref updated without causing re-renders
+  useEffect(() => {
+    onSearchRef.current = onSearch
+  }, [onSearch])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      debouncedSearch(query)
-    }, 300) // Optimized debounce to 300ms for better UX
+      onSearchRef.current(query)
+    }, 300)
 
     return () => clearTimeout(timeoutId)
-  }, [query, debouncedSearch])
+  }, [query])
 
   return (
     <div className="relative max-w-xl mx-auto mb-8">

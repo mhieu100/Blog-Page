@@ -40,6 +40,7 @@ const CreateArticle = () => {
   const [showPreview, setShowPreview] = useState(false)
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +59,10 @@ const CreateArticle = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (isSubmitting) return // Prevent duplicate submissions
+
+    setIsSubmitting(true)
     const formData = new FormData()
     formData.append('title', title)
     formData.append('content', content)
@@ -77,6 +82,7 @@ const CreateArticle = () => {
       navigate('/')
     } catch (error) {
       console.error('Error creating article:', error)
+      setIsSubmitting(false)
     }
   }
 
@@ -208,9 +214,10 @@ const CreateArticle = () => {
             </div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
+              disabled={isSubmitting}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Submit for Review
+              {isSubmitting ? 'Submitting...' : 'Submit for Review'}
             </button>
           </form>
         </div>
