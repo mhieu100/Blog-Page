@@ -44,6 +44,3 @@ infrastructure/nginx/ssl/
 
 # OS
 Thumbs.db
-
-docs/
-node_modules
