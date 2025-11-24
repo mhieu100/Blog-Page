@@ -21,7 +21,7 @@
   "homepage": "https://github.com/mhieu100/deloy-fullstack#readme",
   "lint-staged": {
     "frontend/**/*.{ts,tsx}": [
-      "cd frontend && npm run lint"
+      "npm run lint:staged --prefix frontend --"
     ]
   },
   "devDependencies": {
