@@ -18,7 +18,9 @@ function App() {
       <Router>
         <div className="min-h-screen bg-gray-100">
           <Navbar />
-          <Routes>
+          {/* Add padding-top to prevent content from being hidden under fixed navbar */}
+          <main className="pt-16">
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/article/:id" element={<ArticleDetail />} />
             
@@ -36,7 +38,8 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/articles" element={<AdminArticleList />} />
             </Route>
-          </Routes>
+            </Routes>
+          </main>
         </div>
       </Router>
     </AuthProvider>
