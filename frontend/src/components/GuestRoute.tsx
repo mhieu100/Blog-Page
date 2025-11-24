@@ -1,14 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/useAuth';
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAuth } from '../context/useAuth'
 
 const GuestRoute = () => {
-    const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth()
 
-    if (isAuthenticated) {
-        return <Navigate to="/" replace />;
-    }
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />
+  }
 
-    return <Outlet />;
-};
+  return <Outlet />
+}
 
-export default GuestRoute;
+export default GuestRoute

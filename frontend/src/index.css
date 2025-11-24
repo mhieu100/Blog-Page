@@ -1,3 +1,109 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ReactQuill Dark Mode Styles */
+.dark .ql-toolbar.ql-snow {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+.dark .ql-container.ql-snow {
+  background-color: #1f2937;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+.dark .ql-editor.ql-blank::before {
+  color: #9ca3af;
+}
+
+.dark .ql-snow .ql-stroke {
+  stroke: #d1d5db;
+}
+
+.dark .ql-snow .ql-fill {
+  fill: #d1d5db;
+}
+
+.dark .ql-snow .ql-picker-label {
+  color: #d1d5db;
+}
+
+.dark .ql-snow .ql-picker-options {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+.dark .ql-snow .ql-picker-item {
+  color: #d1d5db;
+}
+
+.dark .ql-snow .ql-picker-item:hover {
+  color: #ffffff;
+  background-color: #4b5563;
+}
+
+.dark .ql-snow.ql-toolbar button:hover,
+.dark .ql-snow .ql-toolbar button:hover {
+  color: #ffffff;
+}
+
+.dark .ql-snow.ql-toolbar button:hover .ql-stroke,
+.dark .ql-snow .ql-toolbar button:hover .ql-stroke {
+  stroke: #ffffff;
+}
+
+.dark .ql-snow.ql-toolbar button:hover .ql-fill,
+.dark .ql-snow .ql-toolbar button:hover .ql-fill {
+  fill: #ffffff;
+}
+
+.dark .ql-snow.ql-toolbar button.ql-active,
+.dark .ql-snow .ql-toolbar button.ql-active {
+  color: #60a5fa;
+}
+
+.dark .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.dark .ql-snow .ql-toolbar button.ql-active .ql-stroke {
+  stroke: #60a5fa;
+}
+
+.dark .ql-snow.ql-toolbar button.ql-active .ql-fill,
+.dark .ql-snow .ql-toolbar button.ql-active .ql-fill {
+  fill: #60a5fa;
+}
+
+.dark .ql-snow a {
+  color: #60a5fa;
+}
+
+.dark .ql-editor {
+  color: #f3f4f6;
+}
+
+.dark .ql-editor h1,
+.dark .ql-editor h2,
+.dark .ql-editor h3,
+.dark .ql-editor h4,
+.dark .ql-editor h5,
+.dark .ql-editor h6 {
+  color: #ffffff;
+}
+
+/* Quill Preview in dark mode */
+.dark .ql-editor p,
+.dark .ql-editor ul,
+.dark .ql-editor ol,
+.dark .ql-editor li,
+.dark .ql-editor blockquote {
+  color: #f3f4f6;
+}
+
+.dark .ql-editor strong {
+  color: #ffffff;
+}
+
+.dark .ql-editor blockquote {
+  border-left-color: #4b5563;
+}

@@ -1,23 +1,23 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/useAuth';
+import type React from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAuth } from '../context/useAuth'
 
 interface ProtectedRouteProps {
-    requireAdmin?: boolean;
+  requireAdmin?: boolean
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requireAdmin = false }) => {
-    const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth()
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
 
-    if (requireAdmin && !isAdmin) {
-        return <Navigate to="/" replace />;
-    }
+  if (requireAdmin && !isAdmin) {
+    return <Navigate to="/" replace />
+  }
 
-    return <Outlet />;
-};
+  return <Outlet />
+}
 
-export default ProtectedRoute;
+export default ProtectedRoute
