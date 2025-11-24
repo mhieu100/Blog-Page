@@ -1,5 +1,5 @@
-import { LogOut, Menu, Moon, PenSquare, ShieldCheck, Sun, User, X } from 'lucide-react'
-import { useState } from 'react'
+import { ChevronDown, LogOut, Menu, Moon, PenSquare, ShieldCheck, Sun, User, X } from 'lucide-react'
+import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { useDarkMode } from '../context/useDarkMode'
@@ -9,15 +9,22 @@ const Navbar = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode()
   const navigate = useNavigate()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)
+  const [isAdminDropdownOpen, setIsAdminDropdownOpen] = useState(false)
+  const userDropdownRef = useRef<HTMLDivElement>(null)
+  const adminDropdownRef = useRef<HTMLDivElement>(null)
 
   const handleLogout = () => {
     logout()
     navigate('/login')
     setIsMobileMenuOpen(false)
+    setIsUserDropdownOpen(false)
   }
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
+    setIsUserDropdownOpen(false)
+    setIsAdminDropdownOpen(false)
   }
 
   return (
@@ -36,73 +43,113 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
             {isAuthenticated ? (
               <>
                 <Link
                   to="/create-article"
-                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                 >
                   <PenSquare className="w-5 h-5 mr-1" />
                   Write
                 </Link>
-                <Link
-                  to="/my-articles"
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                >
-                  My Articles
-                </Link>
-                <Link
-                  to="/profile"
-                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                >
-                  <User className="w-5 h-5 mr-1" />
-                  Profile
-                </Link>
+
+                {/* User Dropdown */}
+                <div className="relative" ref={userDropdownRef}>
+                  <button
+                    onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                    className="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                  >
+                    <User className="w-5 h-5 mr-1" />
+                    Account
+                    <ChevronDown className="w-4 h-4 ml-1" />
+                  </button>
+
+                  {isUserDropdownOpen && (
+                    <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 overflow-hidden">
+                      <Link
+                        to="/my-articles"
+                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                        onClick={() => setIsUserDropdownOpen(false)}
+                      >
+                        My Articles
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                        onClick={() => setIsUserDropdownOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                      <div className="border-t border-gray-200 dark:border-gray-600" />
+                      <button
+                        onClick={() => {
+                          handleLogout()
+                          setIsUserDropdownOpen(false)
+                        }}
+                        className="w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors flex items-center"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Admin Dropdown */}
                 {isAdmin && (
-                  <>
-                    <Link
-                      to="/admin"
-                      className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  <div className="relative" ref={adminDropdownRef}>
+                    <button
+                      onClick={() => setIsAdminDropdownOpen(!isAdminDropdownOpen)}
+                      className="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                     >
                       <ShieldCheck className="w-5 h-5 mr-1" />
-                      Review
-                    </Link>
-                    <Link
-                      to="/admin/articles"
-                      className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                    >
-                      All Articles
-                    </Link>
-                  </>
+                      Admin
+                      <ChevronDown className="w-4 h-4 ml-1" />
+                    </button>
+
+                    {isAdminDropdownOpen && (
+                      <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 overflow-hidden">
+                        <Link
+                          to="/admin"
+                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                          onClick={() => setIsAdminDropdownOpen(false)}
+                        >
+                          Pending Reviews
+                        </Link>
+                        <Link
+                          to="/admin/articles"
+                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                          onClick={() => setIsAdminDropdownOpen(false)}
+                        >
+                          All Articles
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 )}
+
+                {/* Theme Toggle */}
                 <button
                   onClick={toggleDarkMode}
-                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                   aria-label="Toggle dark mode"
                 >
                   {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
-                >
-                  <LogOut className="w-5 h-5 mr-1" />
-                  Logout
                 </button>
               </>
             ) : (
               <>
                 <button
                   onClick={toggleDarkMode}
-                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                   aria-label="Toggle dark mode"
                 >
                   {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
                 <Link
                   to="/login"
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                 >
                   Login
                 </Link>
