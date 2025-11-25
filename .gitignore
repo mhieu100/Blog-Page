@@ -38,9 +38,7 @@ yarn-error.log*
 .env.local
 .env.*.local
 
-# Infrastructure
-infrastructure/certbot/
-infrastructure/nginx/ssl/
+
 
 # OS
 Thumbs.db

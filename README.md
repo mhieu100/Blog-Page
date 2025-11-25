@@ -54,15 +54,7 @@ deloy-fullstack/
 │   │   └── App.tsx
 │   ├── package.json
 │   └── vite.config.ts
-├── infrastructure/          # Deployment configs
-│   ├── docker-compose.yml
-│   ├── nginx/
-│   └── init-letsencrypt.sh
-├── scripts/                 # Deployment scripts
-│   ├── deploy-backend.sh
-│   └── deploy-frontend.sh
-├── DEPLOYMENT_GUIDE.md      # Chi tiết hướng dẫn deploy
-└── PRE_DEPLOYMENT_CHECKLIST.md
+
 ```
 
 ## 🚀 Quick Start
@@ -149,27 +141,7 @@ JWT_SECRET=your_jwt_secret
 VITE_API_BASE_URL=http://localhost:8080/api
 ```
 
-## 🚢 Deployment
 
-### Quick Deploy
-
-```bash
-# Deploy backend
-cd scripts
-./deploy-backend.sh
-
-# Deploy frontend
-./deploy-frontend.sh
-```
-
-### Chi tiết
-
-Xem [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) để có hướng dẫn chi tiết về:
-- Setup AWS EC2
-- Configure Docker
-- Setup SSL với Let's Encrypt
-- Deploy lên Vercel
-- CI/CD với GitHub Actions
 
 ## 🧪 Testing
 
@@ -244,7 +216,7 @@ This project is licensed under the MIT License.
 - Spring Boot Documentation
 - React Documentation
 - Vercel Platform
-- AWS Documentation
+
 - Supabase
 - Cloudinary
 
