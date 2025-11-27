@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useAuth } from '../context/useAuth'
+import { useAuth } from '../../context/useAuth'
 
 const OAuth2RedirectHandler = () => {
   const [searchParams] = useSearchParams()
@@ -13,7 +13,11 @@ const OAuth2RedirectHandler = () => {
 
     if (token && role) {
       login(token, role)
-      navigate('/')
+      if (role === 'ADMIN') {
+        navigate('/admin')
+      } else {
+        navigate('/')
+      }
     } else {
       navigate('/login')
     }

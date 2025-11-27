@@ -5,8 +5,8 @@ import { useState } from 'react'
 import ReactQuill from 'react-quill'
 import { useNavigate } from 'react-router-dom'
 import 'react-quill/dist/quill.snow.css'
-import api from '../utils/api'
-import { calculateReadingTime } from '../utils/readingTime'
+import api from '../../utils/api'
+import { calculateReadingTime } from '../../utils/readingTime'
 
 const modules = {
   toolbar: [

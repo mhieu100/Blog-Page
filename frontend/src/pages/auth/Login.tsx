@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import { useAuth } from '../context/useAuth'
-import api from '../utils/api'
+import { useAuth } from '../../context/useAuth'
+import api from '../../utils/api'
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Invalid email address'),
@@ -34,7 +34,11 @@ const Login = () => {
     try {
       const response = await api.post('/auth/login', data)
       login(response.data.token, response.data.role)
-      navigate('/')
+      if (response.data.role === 'ADMIN') {
+        navigate('/admin')
+      } else {
+        navigate('/')
+      }
     } catch (err) {
       console.error('Login error:', err)
       setServerError('Invalid email or password')

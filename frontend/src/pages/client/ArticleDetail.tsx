@@ -2,9 +2,9 @@ import DOMPurify from 'dompurify'
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import type { Article } from '../types'
-import api from '../utils/api'
-import { calculateReadingTime } from '../utils/readingTime'
+import type { Article } from '../../types'
+import api from '../../utils/api'
+import { calculateReadingTime } from '../../utils/readingTime'
 
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>()

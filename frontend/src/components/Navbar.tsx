@@ -21,9 +21,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)
-  const [isAdminDropdownOpen, setIsAdminDropdownOpen] = useState(false)
   const userDropdownRef = useRef<HTMLDivElement>(null)
-  const adminDropdownRef = useRef<HTMLDivElement>(null)
 
   const handleLogout = () => {
     logout()
@@ -35,7 +33,6 @@ const Navbar = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
     setIsUserDropdownOpen(false)
-    setIsAdminDropdownOpen(false)
   }
 
   return (
@@ -85,6 +82,15 @@ const Navbar = () => {
 
                   {isUserDropdownOpen && (
                     <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 overflow-hidden">
+                      {isAdmin && (
+                        <Link
+                          to="/admin"
+                          className="block px-4 py-2 text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors font-medium"
+                          onClick={() => setIsUserDropdownOpen(false)}
+                        >
+                          Admin Dashboard
+                        </Link>
+                      )}
                       <Link
                         to="/my-articles"
                         className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
@@ -113,39 +119,6 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-
-                {/* Admin Dropdown */}
-                {isAdmin && (
-                  <div className="relative" ref={adminDropdownRef}>
-                    <button
-                      onClick={() => setIsAdminDropdownOpen(!isAdminDropdownOpen)}
-                      className="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
-                    >
-                      <ShieldCheck className="w-5 h-5 mr-1" />
-                      Admin
-                      <ChevronDown className="w-4 h-4 ml-1" />
-                    </button>
-
-                    {isAdminDropdownOpen && (
-                      <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 overflow-hidden">
-                        <Link
-                          to="/admin"
-                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                          onClick={() => setIsAdminDropdownOpen(false)}
-                        >
-                          Pending Reviews
-                        </Link>
-                        <Link
-                          to="/admin/articles"
-                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                          onClick={() => setIsAdminDropdownOpen(false)}
-                        >
-                          All Articles
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
 
                 {/* Theme Toggle */}
                 <button
@@ -203,6 +176,16 @@ const Navbar = () => {
         <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
           {isAuthenticated ? (
             <>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="flex items-center px-3 py-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors font-medium"
+                  onClick={closeMobileMenu}
+                >
+                  <ShieldCheck className="w-5 h-5 mr-2" />
+                  Admin Dashboard
+                </Link>
+              )}
               <Link
                 to="/create-article"
                 className="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"
@@ -226,25 +209,6 @@ const Navbar = () => {
                 <User className="w-5 h-5 mr-2" />
                 Profile
               </Link>
-              {isAdmin && (
-                <>
-                  <Link
-                    to="/admin"
-                    className="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"
-                    onClick={closeMobileMenu}
-                  >
-                    <ShieldCheck className="w-5 h-5 mr-2" />
-                    Review
-                  </Link>
-                  <Link
-                    to="/admin/articles"
-                    className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"
-                    onClick={closeMobileMenu}
-                  >
-                    All Articles
-                  </Link>
-                </>
-              )}
               <button
                 onClick={toggleDarkMode}
                 className="flex items-center w-full px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"

@@ -1,17 +1,17 @@
-import { Check, Trash2, X } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import type { Article } from '../types'
-import api from '../utils/api'
+import type { Article } from '../../types'
+import api from '../../utils/api'
 
-const AdminArticleList = () => {
+const MyArticles = () => {
   const [articles, setArticles] = useState<Article[]>([])
 
   const fetchArticles = useCallback(async () => {
     try {
-      const response = await api.get('/admin/articles')
+      const response = await api.get('/articles/my-articles')
       setArticles(response.data)
     } catch (error) {
-      console.error('Error fetching articles:', error)
+      console.error('Error fetching my articles:', error)
     }
   }, [])
 
@@ -30,24 +30,6 @@ const AdminArticleList = () => {
     }
   }
 
-  const handleApprove = async (id: number) => {
-    try {
-      await api.put(`/admin/articles/${id}/approve`)
-      fetchArticles()
-    } catch (error) {
-      console.error('Error approving article:', error)
-    }
-  }
-
-  const handleReject = async (id: number) => {
-    try {
-      await api.put(`/admin/articles/${id}/reject`)
-      fetchArticles()
-    } catch (error) {
-      console.error('Error rejecting article:', error)
-    }
-  }
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'APPROVED':
@@ -61,7 +43,7 @@ const AdminArticleList = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold mb-8 dark:text-white">Manage All Articles</h1>
+      <h1 className="text-3xl font-bold mb-8 dark:text-white">My Articles</h1>
       <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {articles.map((article) => (
@@ -79,31 +61,13 @@ const AdminArticleList = () => {
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    By {article.author?.name} ({article.author?.email})
+                    Created at: {new Date(article.createdAt).toLocaleDateString()}
                   </p>
                   <p className="mt-2 text-gray-600 dark:text-gray-300 line-clamp-2">
                     {article.content}
                   </p>
                 </div>
-                <div className="ml-4 flex items-center space-x-2">
-                  {article.status === 'PENDING' && (
-                    <>
-                      <button
-                        onClick={() => handleApprove(article.id)}
-                        className="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-full"
-                        title="Approve"
-                      >
-                        <Check className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleReject(article.id)}
-                        className="p-2 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-full"
-                        title="Reject"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    </>
-                  )}
+                <div className="ml-4">
                   <button
                     onClick={() => handleDelete(article.id)}
                     className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full"
@@ -117,7 +81,7 @@ const AdminArticleList = () => {
           ))}
           {articles.length === 0 && (
             <li className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-              No articles found.
+              You haven't created any articles yet.
             </li>
           )}
         </ul>
@@ -126,4 +90,4 @@ const AdminArticleList = () => {
   )
 }
 
-export default AdminArticleList
+export default MyArticles

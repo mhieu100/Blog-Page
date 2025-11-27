@@ -1,8 +1,8 @@
 import { Lock, Mail, Save, TrendingUp, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useAuth } from '../context/useAuth'
-import type { Article } from '../types'
-import api from '../utils/api'
+import { useAuth } from '../../context/useAuth'
+import type { Article } from '../../types'
+import api from '../../utils/api'
 
 interface UserStats {
   totalArticles: number

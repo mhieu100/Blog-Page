@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import AboutMe from '../components/home/AboutMe'
-import Categories from '../components/home/Categories'
-import FeaturedPosts from '../components/home/FeaturedPosts'
-import HeroSection from '../components/home/HeroSection'
-import LatestPosts from '../components/home/LatestPosts'
-import Newsletter from '../components/home/Newsletter'
-import ProgrammingSeries from '../components/home/ProgrammingSeries'
-import type { Article } from '../types'
-import api from '../utils/api'
+import AboutMe from '../../components/home/AboutMe'
+import Categories from '../../components/home/Categories'
+import FeaturedPosts from '../../components/home/FeaturedPosts'
+import HeroSection from '../../components/home/HeroSection'
+import LatestPosts from '../../components/home/LatestPosts'
+import Newsletter from '../../components/home/Newsletter'
+import ProgrammingSeries from '../../components/home/ProgrammingSeries'
+import type { Article } from '../../types'
+import api from '../../utils/api'
 
 const Home = () => {
   const [articles, setArticles] = useState<Article[]>([])

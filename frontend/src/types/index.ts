@@ -22,3 +22,9 @@ export interface Article {
     email: string
   }
 }
+export interface UserDto {
+  id: number
+  name: string
+  email: string
+  role: string
+}

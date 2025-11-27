@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import { useAuth } from '../context/useAuth'
-import api from '../utils/api'
+import { useAuth } from '../../context/useAuth'
+import api from '../../utils/api'
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),

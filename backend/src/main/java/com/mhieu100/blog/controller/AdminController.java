@@ -14,6 +14,12 @@ import java.util.List;
 public class AdminController {
 
     private final ArticleService articleService;
+    private final com.mhieu100.blog.service.UserService userService;
+
+    @GetMapping("/users")
+    public ResponseEntity<List<com.mhieu100.blog.dto.UserDto>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
 
     @GetMapping("/pending-articles")
     public ResponseEntity<List<Article>> getPendingArticles() {
