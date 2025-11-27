@@ -48,7 +48,9 @@ const Login = () => {
   }
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google'
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+    const googleAuthUrl = API_BASE_URL.replace(/\/api$/, '') + '/oauth2/authorization/google'
+    window.location.href = googleAuthUrl
   }
 
   return (
