@@ -2,6 +2,7 @@ package com.mhieu100.blog.config;
 
 import com.mhieu100.blog.security.JwtAuthenticationFilter;
 import com.mhieu100.blog.security.OAuth2LoginSuccessHandler;
+import com.mhieu100.blog.security.RateLimitFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,7 @@ public class SecurityConfig {
         private final JwtAuthenticationFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
         private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+        private final RateLimitFilter rateLimitFilter;
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,14 +44,25 @@ public class SecurityConfig {
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/articles/{id}")
                                                 .permitAll()
+                                                .requestMatchers(org.springframework.http.HttpMethod.POST,
+                                                                "/api/ai/chat")
+                                                .permitAll()
+                                                .requestMatchers(org.springframework.http.HttpMethod.POST,
+                                                                "/api/ai/generate")
+                                                .permitAll()
                                                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authenticationProvider(authenticationProvider)
+                                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                                 .oauth2Login(oauth2 -> oauth2
-                                                .successHandler(oAuth2LoginSuccessHandler));
+                                                .successHandler(oAuth2LoginSuccessHandler))
+                                .exceptionHandling(exception -> exception
+                                                .authenticationEntryPoint(
+                                                                new org.springframework.security.web.authentication.HttpStatusEntryPoint(
+                                                                                org.springframework.http.HttpStatus.UNAUTHORIZED)));
 
                 return http.build();
         }
