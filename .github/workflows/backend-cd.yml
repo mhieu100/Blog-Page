@@ -1,30 +1,48 @@
-name: Backend CD
+name: Backend CD to EC2
 
 on:
   push:
     branches: [ main ]
     paths:
       - 'backend/**'
+      - '.github/workflows/backend-cd.yml'
 
 jobs:
   deploy:
-    name: Deploy Backend to Render
+    name: Deploy Backend to EC2
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Build with Maven
-        working-directory: ./backend
-        run: mvn clean package -DskipTests
-
-      - name: Trigger Render Deploy
-        if: success()
-        run: curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            # Navigate to project directory
+            cd ~/dev/deloy-fullstack
+            
+            # Pull latest changes
+            git pull origin main
+            
+            # Navigate to backend directory
+            cd backend
+            
+            # Stop and remove existing containers
+            docker-compose down
+            
+            # Remove old images to save space
+            docker image prune -f
+            
+            # Build and start new containers
+            docker-compose up -d --build
+            
+            # Show container status
+            docker-compose ps
+            
+            # Show logs for verification
+            docker-compose logs --tail=50 backend
