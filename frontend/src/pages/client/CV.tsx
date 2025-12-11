@@ -32,7 +32,7 @@ const CV = () => {
               {/* Name & Title */}
               <div className="text-center mb-6">
                 <h1 className="text-2xl font-bold mb-1">Nguyễn Văn Hiếu</h1>
-                <p className="text-lg text-gray-300">Fullstack Developer</p>
+                <p className="text-lg text-gray-300">Fresher Java</p>
               </div>
 
               {/* Contact Info */}
@@ -84,14 +84,16 @@ const CV = () => {
                       <span className="font-semibold text-sm">Frontend</span>
                     </div>
                     <div className="flex flex-wrap gap-1">
-                      {['HTML', 'CSS', 'JS', 'TS', 'React', 'Tailwind'].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 bg-blue-900/50 text-blue-200 rounded text-xs"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                      {['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Bootstrap', 'React'].map(
+                        (skill) => (
+                          <span
+                            key={skill}
+                            className="px-2 py-0.5 bg-blue-900/50 text-blue-200 rounded text-xs"
+                          >
+                            {skill}
+                          </span>
+                        )
+                      )}
                     </div>
                   </div>
                   <div>
@@ -100,7 +102,7 @@ const CV = () => {
                       <span className="font-semibold text-sm">Backend</span>
                     </div>
                     <div className="flex flex-wrap gap-1">
-                      {['Java', 'Spring Boot', 'PHP', 'Laravel'].map((skill) => (
+                      {['Java', 'Spring Boot'].map((skill) => (
                         <span
                           key={skill}
                           className="px-2 py-0.5 bg-green-900/50 text-green-200 rounded text-xs"
@@ -113,10 +115,10 @@ const CV = () => {
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <Database className="w-4 h-4 text-purple-400" />
-                      <span className="font-semibold text-sm">Database</span>
+                      <span className="font-semibold text-sm">Tools & Others</span>
                     </div>
                     <div className="flex flex-wrap gap-1">
-                      {['MySQL', 'Redis', 'Git', 'Postman'].map((skill) => (
+                      {['MySQL', 'Redis', 'Git', 'Postman', 'Docker'].map((skill) => (
                         <span
                           key={skill}
                           className="px-2 py-0.5 bg-purple-900/50 text-purple-200 rounded text-xs"
@@ -136,12 +138,14 @@ const CV = () => {
                   HỌC VẤN
                 </h2>
                 <div>
-                  <p className="font-semibold text-sm mb-1">ĐHĐN - Việt Hàn</p>
-                  <p className="text-xs text-gray-300 mb-1">Công nghệ thông tin</p>
-                  <p className="text-xs text-gray-400 mb-2">2021 - 2026</p>
+                  <p className="font-semibold text-sm mb-1">
+                    Trường Đại học Công nghệ Thông tin & Truyền thông Việt Hàn - ĐHĐN
+                  </p>
+                  <p className="text-xs text-gray-400 mb-1">2021 - 2026</p>
+                  <p className="text-xs text-gray-300 mb-2">Công nghệ thông tin</p>
                   <ul className="text-xs text-gray-300 space-y-1">
-                    <li>• Giải nhất Hackathon ZKP</li>
-                    <li>• Java Certificate FPT</li>
+                    <li>• Đạt giải nhất Hackathon ZKP programming (ZKP labs)</li>
+                    <li>• Java Basic Certificate FPT</li>
                   </ul>
                 </div>
               </div>
@@ -198,9 +202,17 @@ const CV = () => {
                           </span>
                         </div>
                         <ul className="text-xs text-gray-700 dark:text-gray-300 space-y-1">
-                          <li>• Phát triển phần mềm với Java, Spring Boot, MySQL</li>
-                          <li>• Phối hợp nhóm theo mô hình Agile/Scrum</li>
-                          <li>• Xây dựng RESTful API và Unit Test với JUnit</li>
+                          <li>
+                            • Tham gia xây dựng tế phát triển phần mềm sử dụng Java, Spring Boot, và
+                            MySQL
+                          </li>
+                          <li>
+                            • Hỗ trợ xây dựng RESTful API và thực hiện kiểm thử đơn vị (Unit Test)
+                            nhằm đảm bảo chất lượng hệ thống
+                          </li>
+                          <li>
+                            • Làm quen với quy trình phát triển phần mềm như Git, JIRA, và Postman
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -221,9 +233,14 @@ const CV = () => {
                           </span>
                         </div>
                         <ul className="text-xs text-gray-700 dark:text-gray-300 space-y-1">
-                          <li>• Phát triển Front-end với ReactJs, HTML5, CSS3</li>
-                          <li>• Tối ưu UI/UX cải thiện trải nghiệm người dùng</li>
-                          <li>• Debug và quản lý mã nguồn với Git</li>
+                          <li>
+                            • Xây dựng và phát triển các trang web bằng các công nghệ Front-end sử
+                            dụng React.js, JavaScript (ES6+), HTML5, và CSS3
+                          </li>
+                          <li>
+                            • Hỗ trợ xây dựng và mở rộng cơ sở mã nguồn (UI/UX) nhằm cải thiện tốc
+                            độ và trải nghiệm người dùng
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -242,54 +259,82 @@ const CV = () => {
                   <div className="border-l-4 border-purple-500 pl-3 bg-purple-50 dark:bg-purple-900/20 p-3 rounded-r-lg">
                     <div className="flex justify-between items-start mb-1">
                       <h3 className="font-bold text-sm text-gray-900 dark:text-white">
-                        Hệ thống lập lịch tiêm chủng Blockchain
+                        Hệ thống lập lịch tiêm chủng ứng dụng Blockchain (SafeVax)
                       </h3>
                       <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
                         7/2024 - 10/2024
                       </span>
                     </div>
                     <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">
-                      Hệ thống đặt lịch tiêm chủng trực tuyến với lưu trữ dữ liệu blockchain an toàn
-                      và không thể thay đổi
+                      <strong>Fullstack developer</strong>
+                    </p>
+                    <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">
+                      Xây dựng hệ thống đặt lịch tiêm chủng với cơ chế lưu trữ trung tâm kết hợp
+                      công nghệ blockchain để đảm bảo tính minh bạch và không thể thay đổi. Người
+                      dùng đến địa phương, nộp tiếng mày tỷ đôn và quy trỉnh trong quý trinh tiêm
+                      chủng. Tích hợp AI để tư vấn các loại vaccine.
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
-                      <strong>Tech:</strong> React.js, Spring Boot, MySQL, Truffle, Solidity
+                      <strong>Technology:</strong> React.js and Spring Boot, Spring Security, JPA,
+                      Lombok, PostgreSQL, JWT, Meta Mask, Truffle, Ganache, Spring AI, Qdrant
                     </p>
-                    <a
-                      href="https://github.com/mhieu100/vaxsafe-blockchain.git"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      🔗 github.com/mhieu100/vaxsafe-blockchain.git
-                    </a>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
+                      <strong>Project:</strong>{' '}
+                      <a
+                        href="https://github.com/mhieu100/vaxsafe-blockchain.git"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        https://github.com/mhieu100/vaxsafe-blockchain.git
+                      </a>
+                    </p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      <strong>Deploy:</strong>{' '}
+                      <a
+                        href="https://safevax.mhieu100.space"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        https://safevax.mhieu100.space
+                      </a>
+                    </p>
                   </div>
 
                   {/* Camera Project */}
                   <div className="border-l-4 border-purple-500 pl-3 bg-purple-50 dark:bg-purple-900/20 p-3 rounded-r-lg">
                     <div className="flex justify-between items-start mb-1">
                       <h3 className="font-bold text-sm text-gray-900 dark:text-white">
-                        Quản lý camera streaming real-time
+                        Quản lý suất ăn dài liệu phát tục truyền camera theo real time gian thực
                       </h3>
                       <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
                         7/2024 - 10/2024
                       </span>
                     </div>
                     <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">
-                      Hệ thống quản lý và truyền tải nhiều camera đồng thời với giao diện trực quan
+                      <strong>Fullstack developer</strong>
+                    </p>
+                    <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">
+                      Hệ thống quản lý và truyền tài camera thẻo thời gian thực. Người dùng có thể
+                      đăng ký camera cùng tần thần kiếm tra. Giao diện trực quan cho phéo xem trực
+                      tiếp. Hệ thống được cải thiện đăng tài
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
-                      <strong>Tech:</strong> React.js, Spring Boot, PostgreSQL, WebSocket, Redis,
-                      Microservice
+                      <strong>Technology:</strong> React.js, Spring Boot, Spring Security, JPA,
+                      Lombok, PostgreSQL, Websocket, Microservice
                     </p>
-                    <a
-                      href="https://github.com/mhieu100/camera.git"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      🔗 github.com/mhieu100/camera.git
-                    </a>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      <strong>Project:</strong>{' '}
+                      <a
+                        href="https://github.com/mhieu100/internShip.git"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        https://github.com/mhieu100/internShip.git
+                      </a>
+                    </p>
                   </div>
                 </div>
               </section>
